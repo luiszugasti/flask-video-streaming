@@ -1,9 +1,12 @@
 #!/usr/bin/env python
+import threading
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response
 
 # import camera driver
+import nonflaskapp
+
 if os.environ.get('CAMERA'):
     Camera = import_module('camera_' + os.environ['CAMERA']).Camera
 else:
@@ -18,6 +21,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Video streaming home page."""
+    t2 = threading.Thread(target=nonflaskapp.main_loop())
+
+    t2.start()
+
+    t2.join()
+
     return render_template('index.html')
 
 

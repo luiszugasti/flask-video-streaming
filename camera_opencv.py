@@ -26,4 +26,5 @@ class Camera(BaseCamera):
             _, img = camera.read()
 
             # encode as a jpeg image and return it
-            yield cv2.imencode('.jpg', img)[1].tobytes()
+            # yield cv2.imencode('.jpg', img)[1].tobytes()
+            yield img
